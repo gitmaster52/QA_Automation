@@ -14,6 +14,8 @@ public class HomePageTest extends BaseClass {
 	IndexPage indexpage;
 	HomePage homepage;
 	String expected = "http://automationpractice.com/index.php?controller=my-account";
+	
+	
 
 	
 	@Test(priority = 1,groups="sanity")

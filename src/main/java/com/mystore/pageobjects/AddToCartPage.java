@@ -8,6 +8,8 @@ import com.mystore.actiondriver.Action;
 import com.mystore.base.BaseClass;
 
 public class AddToCartPage extends BaseClass {
+	
+    Action action  = new Action();
 
 	@FindBy(id = "quantity_wanted")
 	WebElement quantity;
@@ -28,7 +30,7 @@ public class AddToCartPage extends BaseClass {
 	
 	public AddToCartPage()
 	{
-		PageFactory.initElements(driver, this);
+		PageFactory.initElements(getDriver(), this);
 	}
 	
 	public void quantityField(String enterQuantity)
@@ -38,12 +40,12 @@ public class AddToCartPage extends BaseClass {
 	
 	public void sizeField(String enterSize) throws Exception
 	{
-		Action.selectDropdown(size, enterSize);
+		Action.selectDropdownByText(size, enterSize);
 	}
 	
 	public void clickOnAddToCartButton()
 	{
-		addToCart.click();
+		action.click(addToCart);
 	}
 	
 	public boolean addToCartValidation() throws InterruptedException
@@ -55,7 +57,7 @@ public class AddToCartPage extends BaseClass {
 	
 	public OrderPage clickOnProccedToCheckOut()
 	{
-		proceedToCheckOutButton.click();
+        action.click(proceedToCheckOutButton);
 		return new OrderPage();
 	}
 	

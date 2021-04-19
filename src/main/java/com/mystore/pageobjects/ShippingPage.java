@@ -4,10 +4,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.mystore.actiondriver.Action;
 import com.mystore.base.BaseClass;
 
 public class ShippingPage extends BaseClass
 {
+	
+	Action action  = new Action();
 	
 	@FindBy(xpath = "//*[contains(text(),'I agree to the terms of service and will adhere to them unconditionally.')]")
 	WebElement termsAndCondtionCheckList;
@@ -17,17 +20,17 @@ public class ShippingPage extends BaseClass
 	
 	public ShippingPage()
 	{
-		PageFactory.initElements(driver, this);
+		PageFactory.initElements(getDriver(), this);
 	}
 
 	public void clickOnTermsAndConditionsCheckList()
 	{
-		termsAndCondtionCheckList.click();
+		action.click(termsAndCondtionCheckList);
 	}
 	
 	public PaymentPage clickOnProceedToCheckOut()
 	{
-		proceedToCheckOut.click();
+		action.click(proceedToCheckOut);
 		return new PaymentPage();
 				
 	}

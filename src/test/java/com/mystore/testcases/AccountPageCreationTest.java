@@ -14,14 +14,18 @@ public class AccountPageCreationTest extends BaseClass {
 	AccountCreationPage accountCreationPage;
 
 
-	@Test(groups="sanity")
-	public void createAccountPageTest() throws InterruptedException {
+	@Test(groups="sanity",dataProvider="createAccount")
+	public void createAccountPageTest(String typeEmail,String gender,String firstName,String lastName,String password,String days, String months,String years,
+			String address,String city,String state,String postal,String country,String mobileNumber,
+			String aAliens) throws Exception {
 		indexpage = new IndexPage();
 		accountCreationPage = new AccountCreationPage();
 		indexpage.clickOnSignIn();
 		loginpage = indexpage.clickOnSignIn();
-		accountCreationPage.createUserAccount("hello456@gmail.com");
+		accountCreationPage.createUserAccount(typeEmail, gender, firstName, lastName, password, days, months, years,
+				address, city, state, postal, country, mobileNumber, aAliens);
 		boolean result = accountCreationPage.validateAccountTitle();
 		Assert.assertTrue(result);
+		
 	}
 }

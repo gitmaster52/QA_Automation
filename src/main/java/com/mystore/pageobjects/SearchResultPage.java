@@ -8,13 +8,15 @@ import com.mystore.actiondriver.Action;
 import com.mystore.base.BaseClass;
 
 public class SearchResultPage extends BaseClass {
+	
+	Action action  = new Action();
 
 	@FindBy(xpath = "//*[@id=\"center_column\"]//img")
 	WebElement productResult;
 	
 
 	public SearchResultPage() {
-		PageFactory.initElements(driver, this);
+		PageFactory.initElements(getDriver(), this);
 	}
 	
 	public boolean isProductAvailable()
@@ -24,7 +26,7 @@ public class SearchResultPage extends BaseClass {
 	
 	public AddToCartPage clickOnProduct()
 	{
-		productResult.click();
+		action.click(productResult);
 		return new AddToCartPage();
 	}
 

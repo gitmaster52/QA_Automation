@@ -8,6 +8,8 @@ import com.mystore.actiondriver.Action;
 import com.mystore.base.BaseClass;
 
 public class LoginPage extends BaseClass {
+	
+	Action action  = new Action();
 
 	@FindBy(id = "email")
 	WebElement emailId;
@@ -19,26 +21,26 @@ public class LoginPage extends BaseClass {
 	WebElement signInButton;
 
 	public LoginPage() {
-		PageFactory.initElements(driver, this);
+		PageFactory.initElements(getDriver(), this);
 	}
 
 	public HomePage login(String typeEmail, String typePassword) {
 		Action.typeText(emailId, typeEmail);
 		Action.typeText(password, typePassword);
-		signInButton.click();
+		action.click(signInButton);
 		return new HomePage();
 	}
 	
 	public AddressPage loginNavigationToAddressPage(String typeEmail, String typePassword) {
 		Action.typeText(emailId, typeEmail);
 		Action.typeText(password, typePassword);
-		signInButton.click();
+		action.click(signInButton);
 		return new AddressPage();
 	}
 
 	public String getCurrentUrl()
 	{
-		String currentUrl = driver.getCurrentUrl();
+		String currentUrl = getDriver().getCurrentUrl();
 		return currentUrl;
 	}
 }

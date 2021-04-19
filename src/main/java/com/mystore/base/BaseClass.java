@@ -24,7 +24,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseClass extends DataProviders {
 
-	public static WebDriver driver;
 	public static Properties prop;
 	public static SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy hh-mm-ss");
 	public static Date date = new Date();
@@ -32,6 +31,8 @@ public class BaseClass extends DataProviders {
     public Logger logger;
     public static ExtentReports extent;
 	public static ExtentTest test;
+	
+	public static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
 	
 	
     @BeforeMethod(groups= {"smoke","sanity","regression"})
@@ -47,25 +48,30 @@ public class BaseClass extends DataProviders {
 		
 		if (browser.equalsIgnoreCase("chrome")) {
 			WebDriverManager.chromedriver().setup();
-			driver = new ChromeDriver();
+			driver.set(new ChromeDriver());
 		} else if (browser.equalsIgnoreCase("firefox")) {
 			WebDriverManager.firefoxdriver().setup();
-			driver = new FirefoxDriver();
+			driver.set(new FirefoxDriver());
 		} else  {
 			System.out.println("Please use proper browser");
 		}
 		logger.info("Opening the browser");
 		logger.info("Invoking the URL");
-		driver.get(prop.getProperty("url"));
+		getDriver().get(prop.getProperty("url"));
 		logger.info("Maximizing the window");
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+		getDriver().manage().window().maximize();
+		getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		getDriver().manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 		
+	}
+    
+    public static WebDriver getDriver()
+	{
+		return driver.get();
 	}
     
     @AfterMethod(groups= {"smoke","sanity","regression"})
 	public void tearDown() {
-		driver.close();
+    	getDriver().close();
 	}
 }

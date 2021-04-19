@@ -8,6 +8,8 @@ import com.mystore.actiondriver.Action;
 import com.mystore.base.BaseClass;
 
 public class IndexPage extends BaseClass {
+	
+	Action action  = new Action();
 
 	@FindBy(xpath = "//a[@class='login']")
 	WebElement signInBtn;
@@ -27,11 +29,11 @@ public class IndexPage extends BaseClass {
 	
 
 	public IndexPage() {
-		PageFactory.initElements(driver, this);
+		PageFactory.initElements(getDriver(), this);
 	}
 
 	public LoginPage clickOnSignIn() {
-		signInBtn.click();
+		action.click(signInBtn);
 		return new LoginPage();
 	}
 
@@ -40,13 +42,13 @@ public class IndexPage extends BaseClass {
 	}
 
 	public String storeTitleValidate() {
-		String titleValidate = driver.getTitle();
+		String titleValidate = getDriver().getTitle();
 		return titleValidate;
 	}
 
 	public SearchResultPage searchProduct(String productName) {
 		Action.typeText(searchBox, productName);
-		submitButton.click();
+		action.click(submitButton);
 		return new SearchResultPage();
 	}
 }

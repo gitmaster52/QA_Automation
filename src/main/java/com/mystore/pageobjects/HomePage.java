@@ -8,6 +8,8 @@ import com.mystore.actiondriver.Action;
 import com.mystore.base.BaseClass;
 
 public class HomePage extends BaseClass {
+	
+	Action action  = new Action();
 
 	@FindBy(xpath = "//span[contains(text(),'Order history and details')]")
 	WebElement oredrHistory;
@@ -17,7 +19,7 @@ public class HomePage extends BaseClass {
 	
 	public HomePage()
 	{
-		PageFactory.initElements(driver, this);
+		PageFactory.initElements(getDriver(), this);
 	}
 	
 	public boolean orderHistroryAndDetails()

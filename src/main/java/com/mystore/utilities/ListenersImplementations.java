@@ -22,7 +22,7 @@ public class ListenersImplementations extends BaseClass implements ITestListener
 		
 		try {
 			test.log(Status.INFO, "Screenshot for " + result.getMethod().getMethodName() + " Failure");
-			test.addScreenCaptureFromPath(Action.getScreenhot(driver)); //This method will add failure screenshort to EXTENT REPOET.
+			test.addScreenCaptureFromPath(Action.getScreenhot(getDriver())); //This method will add failure screenshort to EXTENT REPOET.
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -34,6 +34,7 @@ public class ListenersImplementations extends BaseClass implements ITestListener
 
 	public void onTestSuccess(ITestResult result) {
 		test.log(Status.PASS, result.getMethod().getMethodName() + " is passed");
+		
 	}
 
 	public void onFinish(ITestContext context) {

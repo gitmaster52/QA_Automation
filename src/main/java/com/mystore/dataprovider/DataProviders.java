@@ -8,6 +8,7 @@ public class DataProviders {
 
 	public ExcelReader reader;
 
+	//Login
 	@DataProvider
 	public String[][] loginTest() throws Exception {
 		reader = new ExcelReader();
@@ -23,5 +24,23 @@ public class DataProviders {
 		return loginData;
 
 	}
+	
+	//create account
+		@DataProvider
+		public String[][] createAccount() throws Exception {
+			reader = new ExcelReader();
+			int totalRows = reader.getRowCount("Registration");
+			int totalColumns = reader.getColumnCount("Registration", totalRows);
+
+			String crrateAccountData[][] = new String[totalRows][totalColumns];
+			for (int i = 1; i <= totalRows; i++) {
+				for (int j = 0; j < totalColumns; j++) {
+					crrateAccountData[i - 1][j] = reader.getCellData("Registration", i, j);
+				}
+			}
+			
+			return crrateAccountData;
+
+		}
 
 }

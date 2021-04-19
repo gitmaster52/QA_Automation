@@ -4,9 +4,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.mystore.actiondriver.Action;
 import com.mystore.base.BaseClass;
 
 public class PaymentPage extends BaseClass {
+	
+	Action action  = new Action();
 
 	@FindBy(xpath = "//*[@title='Pay by bank wire']")
 	WebElement payByBankWireOption;
@@ -20,18 +23,18 @@ public class PaymentPage extends BaseClass {
 	
 	public PaymentPage()
 	{
-		PageFactory.initElements(driver, this);
+		PageFactory.initElements(getDriver(), this);
 	}
 	
 	public void clickOnPayByBankWireOption()
 	{
-		payByBankWireOption.click();
+		action.click(payByBankWireOption);
 		
 	}
 	
 	public OrderConfirmationPage clickOnIConfirmMyOrder()
 	{
-		confirmMyOrder.click();
+		action.click(confirmMyOrder);
 		return new OrderConfirmationPage();
 	}
 	

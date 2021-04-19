@@ -4,9 +4,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.mystore.actiondriver.Action;
 import com.mystore.base.BaseClass;
 
 public class OrderPage extends BaseClass {
+	
+	Action action  = new Action();
 
 	@FindBy(xpath = "//*[@id='product_price_1_3_0']//span[@class='price']")
 	WebElement unitPrice;
@@ -18,7 +21,7 @@ public class OrderPage extends BaseClass {
 	WebElement proceedToCheckOut;
 
 	public OrderPage() {
-		PageFactory.initElements(driver, this);
+		PageFactory.initElements(getDriver(), this);
 	}
 
 	public double getUnitPrice() {
@@ -36,8 +39,7 @@ public class OrderPage extends BaseClass {
 	}
 
 	public LoginPage proceedToCheckOut() {
-		proceedToCheckOut.click();
-		//Action.clickElementByJS(proceedToCheckOut);
+		action.click(proceedToCheckOut);
 		return new LoginPage();
 	}
 

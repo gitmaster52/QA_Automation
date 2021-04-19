@@ -21,7 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.mystore.base.BaseClass;
 
-public class Action extends BaseClass {
+public class Action extends BaseClass implements ActionInterface {
 
 	/**
 	 * Used to click on element using javascript.
@@ -60,7 +60,7 @@ public class Action extends BaseClass {
 	 * @param Move to element method
 	 */
 	public static void moveToElement(WebElement element) {
-		Actions action = new Actions(driver);
+		Actions action = new Actions(getDriver());
 		action.moveToElement(element).build().perform();
 
 	}
@@ -73,7 +73,7 @@ public class Action extends BaseClass {
 	 */
 	public static boolean validatePageTitle(String expectedTitle) {
 		boolean titleMatch = false;
-		if (expectedTitle.equals(driver.getTitle())) {
+		if (expectedTitle.equals(getDriver().getTitle())) {
 			titleMatch = true;
 		}
 		return titleMatch;
@@ -86,7 +86,7 @@ public class Action extends BaseClass {
 	 */
 	public static boolean isAlertPresent() {
 		try {
-			driver.switchTo().alert();
+			getDriver().switchTo().alert();
 			return true;
 
 		} catch (NoAlertPresentException e) {
@@ -99,7 +99,7 @@ public class Action extends BaseClass {
 	 * @param time
 	 */
 	public static void visibiltyOfElement(WebElement element, int time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(getDriver(), time);
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 
@@ -109,7 +109,7 @@ public class Action extends BaseClass {
 	 * @param time
 	 */
 	public static void elementClickable(WebElement element, int time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(getDriver(), time);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
@@ -119,7 +119,7 @@ public class Action extends BaseClass {
 	 * @param time
 	 */
 	public static void elementToBeSelected(WebElement element, int time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
+		WebDriverWait wait = new WebDriverWait(getDriver(), time);
 		wait.until(ExpectedConditions.elementToBeSelected(element));
 	}
 
@@ -129,7 +129,7 @@ public class Action extends BaseClass {
 	 * @param time
 	 */
 	public static void fluentWait(WebElement element, int targetTime, int intervalTime) {
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(targetTime))
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver()).withTimeout(Duration.ofSeconds(targetTime))
 				.pollingEvery(Duration.ofSeconds(intervalTime)).ignoring(NoSuchElementException.class);
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
@@ -193,10 +193,20 @@ public class Action extends BaseClass {
 	 * @param text
 	 * @throws Exception 
 	 */
-	public static void selectDropdown(WebElement element, String text) throws Exception {
+	public static void selectDropdownByText(WebElement element, String text) throws Exception {
 		Select s = new Select(element);
 		try {
 		s.selectByVisibleText(text);
+		}catch(Exception  e)
+		{
+			throw new Exception("The web element is not present in the drop down");
+		}
+	}
+	
+	public static void selectDropdownByValue(WebElement element, String text) throws Exception {
+		Select s = new Select(element);
+		try {
+		s.selectByValue(text);
 		}catch(Exception  e)
 		{
 			throw new Exception("The web element is not present in the drop down");
@@ -210,12 +220,26 @@ public class Action extends BaseClass {
 	}
 	
 	/**
-	 * A Method to select the value of Radio button
+	 * A Method to select the Radio button by text
 	 */
-	public static void selectRadiobuttonvalue(List<WebElement> element, String value)
+	public static void selectRadiobuttonByText(List<WebElement> element, String value)
 	{
 		for (WebElement webElement : element) {
 			if(webElement.getText().equalsIgnoreCase(value))
+			{
+				webElement.click();
+				break;
+			}
+		}
+	}
+	
+	/**
+	 * A Method to select the value of Radio button
+	 */
+	public static void selectRadiobuttonByValue(List<WebElement> element, String value)
+	{
+		for (WebElement webElement : element) {
+			if(webElement.getAttribute("value").equalsIgnoreCase(value))
 			{
 				webElement.click();
 				break;
@@ -240,6 +264,12 @@ public class Action extends BaseClass {
 				
 			}
 		}
+	}
+
+	@Override
+	public void click(WebElement ele) {
+		ele.click();
+		
 	}
 	
 }

@@ -5,19 +5,21 @@
 <listeners>
           <listener
 			class-name="com.mystore.utilities.ListenersImplementations" />
-    </listeners>
+			<listener
+			class-name="com.mystore.utilities.RetryAnalyzerListeners" />
+</listeners>
     
-  <test thread-count="10" name="MyStore">
+  <test thread-count="8" name="MyStore_Chrome">
   <parameter name="browser" value="chrome" />
     <classes>
       <class name="com.mystore.testcases.LoginPageTest"/>
-     <!--  <class name="com.mystore.testcases.EndToEndTest"/>
+      <class name="com.mystore.testcases.EndToEndTest"/>
       <class name="com.mystore.testcases.IndexPageTest"/>
       <class name="com.mystore.testcases.SearchResultPageTest"/>
       <class name="com.mystore.testcases.AccountPageCreationTest"/>
       <class name="com.mystore.testcases.HomePageTest"/>
       <class name="com.mystore.testcases.OrderPageTest"/>
-      <class name="com.mystore.testcases.AddToCartPageTest"/> -->
+      <class name="com.mystore.testcases.AddToCartPageTest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
